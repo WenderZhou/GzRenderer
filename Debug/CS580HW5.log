@@ -1,0 +1,33 @@
+﻿cl : command line warning D9035: option 'Gm' has been deprecated and will be removed in a future release
+  rend.cpp
+C:\Users\56883\Desktop\Wenda_Zhou_HW5\rend.cpp(178,7): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\56883\Desktop\Wenda_Zhou_HW5\rend.cpp(179,7): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\56883\Desktop\Wenda_Zhou_HW5\rend.cpp(180,7): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\56883\Desktop\Wenda_Zhou_HW5\rend.cpp(187,19): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\56883\Desktop\Wenda_Zhou_HW5\rend.cpp(187,75): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\56883\Desktop\Wenda_Zhou_HW5\rend.cpp(188,37): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\56883\Desktop\Wenda_Zhou_HW5\rend.cpp(188,76): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\56883\Desktop\Wenda_Zhou_HW5\rend.cpp(189,55): warning C4305: '=': truncation from 'int' to 'float'
+C:\Users\56883\Desktop\Wenda_Zhou_HW5\rend.cpp(334,21): warning C4244: '=': conversion from 'float' to 'GzIntensity', possible loss of data
+C:\Users\56883\Desktop\Wenda_Zhou_HW5\rend.cpp(335,23): warning C4244: '=': conversion from 'float' to 'GzIntensity', possible loss of data
+C:\Users\56883\Desktop\Wenda_Zhou_HW5\rend.cpp(336,22): warning C4244: '=': conversion from 'float' to 'GzIntensity', possible loss of data
+C:\Users\56883\Desktop\Wenda_Zhou_HW5\rend.cpp(470,11): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\56883\Desktop\Wenda_Zhou_HW5\rend.cpp(471,11): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\56883\Desktop\Wenda_Zhou_HW5\rend.cpp(472,11): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\56883\Desktop\Wenda_Zhou_HW5\rend.cpp(473,11): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\56883\Desktop\Wenda_Zhou_HW5\rend.cpp(480,69): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\56883\Desktop\Wenda_Zhou_HW5\rend.cpp(480,66): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\56883\Desktop\Wenda_Zhou_HW5\rend.cpp(482,92): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\56883\Desktop\Wenda_Zhou_HW5\rend.cpp(482,89): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\56883\Desktop\Wenda_Zhou_HW5\rend.cpp(486,101): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\56883\Desktop\Wenda_Zhou_HW5\rend.cpp(486,98): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\56883\Desktop\Wenda_Zhou_HW5\rend.cpp(487,101): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\56883\Desktop\Wenda_Zhou_HW5\rend.cpp(487,98): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\56883\Desktop\Wenda_Zhou_HW5\rend.cpp(488,101): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\56883\Desktop\Wenda_Zhou_HW5\rend.cpp(488,98): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\56883\Desktop\Wenda_Zhou_HW5\rend.cpp(495,143): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\56883\Desktop\Wenda_Zhou_HW5\rend.cpp(495,140): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\56883\Desktop\Wenda_Zhou_HW5\rend.cpp(496,143): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\56883\Desktop\Wenda_Zhou_HW5\rend.cpp(496,140): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\56883\Desktop\Wenda_Zhou_HW5\rend.cpp(503,65): warning C4244: 'argument': conversion from 'float' to 'GzDepth', possible loss of data
+  CS580HW5.vcxproj -> C:\Users\56883\Desktop\Wenda_Zhou_HW5\Debug\CS580HW5.exe
