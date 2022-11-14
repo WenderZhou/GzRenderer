@@ -104,15 +104,20 @@ int Application5::Initialize()
 	status |= m_pRender->GzBeginRender();
 
 	/* Light */
-	GzLight	light1 = { {-0.7071, 0.7071, 0}, {0.7, 0.7, 0.7} };
-	GzLight	light2 = { {0, -0.7071, -0.7071}, {0.7, 0.7, 0.7} };
-	GzLight	light3 = { {0.7071, 0.0, -0.7071}, {0.7, 0.7, 0.7} };
+	GzLight	light1 = { {-0.7071, 0.7071, 0}, {0.6, 0.6, 0.6} };
+	GzLight	light2 = { {0, -0.7071, -0.7071}, {0.6, 0.6, 0.6} };
+	GzLight	light3 = { {0.7071, 0.0, -0.7071}, {0.6, 0.6, 0.6} };
+
+	/*GzLight	light1 = { {-0.7071, 0.7071, 0}, {0.5, 0.5, 0.9} };
+	GzLight	light2 = { {0, -0.7071, -0.7071}, {0.9, 0.2, 0.3} };
+	GzLight	light3 = { {0.7071, 0.0, -0.7071}, {0.2, 0.7, 0.3} };*/
+
 	GzLight	ambientlight = { {0, 0, 0}, {0.3, 0.3, 0.3} };
 
 	/* Material property */
-	GzColor specularCoefficient = { 1.0, 1.0, 1.0 };
+	GzColor specularCoefficient = { 0.3, 0.3, 0.3 };
 	GzColor ambientCoefficient = { 0.1, 0.1, 0.1 };
-	GzColor diffuseCoefficient = {0.0, 0.0, 0.0};
+	GzColor diffuseCoefficient = {0.7, 0.7, 0.7};
 
 	 
 	// renderer is ready for frame --- define lights and shader at start of frame 
@@ -191,7 +196,7 @@ int Application5::Render()
 		&(vertices[2].z), 
 		&(normals[2].x), &(normals[2].y), 	
 		&(normals[2].z), 
-		&(texCoords[2].u), &(texCoords[2].u) ); 
+		&(texCoords[2].u), &(texCoords[2].v) ); 
 
 		m_pRender->GzPutTriangle(vertices, normals, texCoords);
 	} 

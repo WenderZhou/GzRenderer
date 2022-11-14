@@ -10,6 +10,8 @@
 
 #define ROUGHNESS 0.5f
 
+extern GzColor envtex_fun(GzCoord ref);
+
 float inline clamp(float val, float lowerBound, float upperBound)
 {
 	return max(lowerBound, min(upperBound, val));
@@ -561,17 +563,31 @@ float3 fresnelSchlick(GzCoord h, GzCoord v, float3 F0)
 	return F0 + (float3{ 1.0f, 1.0f, 1.0f } - F0) * powf(1 - dot(h, v), 5);
 }
 
-float GeometrySchlickGGX(GzCoord N, GzCoord S)
+float Geometry(GzCoord N, GzCoord S)
 {
 	float NdotS = max(dot(N, S), 0.0f);
 	float k = ROUGHNESS / 2.0f;
 	return NdotS / (NdotS * (1 - k) + k);
 }
 
-float GeometrySmith(GzCoord N, GzCoord v, GzCoord l)
+float GeometrySmith(GzCoord N, GzCoord E, GzCoord L)
 {
-	return GeometrySchlickGGX(N, v) * GeometrySchlickGGX(N, l);
+	return Geometry(N, E) * Geometry(N, L);
 }
+
+const GzColor F0_Titanium = { 194 / 255.0f, 187 / 255.0f, 179 / 255.0f };
+const GzColor F0_Chromium = { 196 / 255.0f, 197 / 255.0f, 196 / 255.0f };
+const GzColor F0_Iron = { 198 / 255.0f, 198 / 255.0f, 200 / 255.0f };
+const GzColor F0_Nickel = { 212 / 255.0f, 205 / 255.0f, 192 / 255.0f };
+const GzColor F0_Platinum = { 214 / 255.0f, 209 / 255.0f, 201 / 255.0f };
+const GzColor F0_Copper = { 250 / 255.0f, 209 / 255.0f, 194 / 255.0f };
+const GzColor F0_Palladium = { 222 / 255.0f, 217 / 255.0f, 211 / 255.0f };
+const GzColor F0_Mercury = { 229 / 255.0f, 228 / 255.0f, 228 / 255.0f };
+const GzColor F0_Brass = { 245 / 255.0f, 228 / 255.0f, 174 / 255.0f };
+const GzColor F0_Zinc = { 213 / 255.0f, 234 / 255.0f, 237 / 255.0f };
+const GzColor F0_Gold = { 255 / 255.0f, 229 / 255.0f, 158 / 255.0f };
+const GzColor F0_Aluminum = { 245 / 255.0f, 246 / 255.0f, 246 / 255.0f };
+const GzColor F0_Silver = { 252 / 255.0f, 250 / 255.0f, 245 / 255.0f };
 
 GzColor GzRender::GzShading(GzCoord normal, GzTextureIndex uv)
 {
@@ -596,14 +612,15 @@ GzColor GzRender::GzShading(GzCoord normal, GzTextureIndex uv)
 
 	N.normalize();
 
+	GzCoord E = { 0.0f, 0.0f, -1.0f };
+
 	for (int i = 0; i < numlights; i++)
 	{
 		GzCoord L = lights[i].direction;
-		GzCoord E = { 0.0f, 0.0f, -1.0f };
 
 		GzCoord h = normalize(L + E);
 
-		GzCoord F = fresnelSchlick(h, E, { 1.0f, 0.86f, 0.57f });
+		GzCoord F = fresnelSchlick(h, E, F0_Silver);
 
 		float D = NDF(N, h);
 		float G = GeometrySmith(N, E, L);
@@ -617,20 +634,38 @@ GzColor GzRender::GzShading(GzCoord normal, GzTextureIndex uv)
 		if (NdotL * NdotE > 0)
 		{
 			NdotL = dot(N, L);
+
+			GzCoord R = normalize(2 * NdotL * N - L);
 			
 			diffuse = diffuse + NdotL * K_d * lights[i].color;
 
-			GzCoord R = 2 * NdotL * N - L;
 			float RdotE = max(0.0f, -R.z);
 
-			specular = specular + G * D * F * lights[i].color;
+			//specular = specular + G * D * F * lights[i].color;
+
+			specular = specular + K_s * powf(dot(R,E), spec) * lights[i].color;
 		}
 	}
 
 	float3 color;
-	color.r = min(1.0f, /*ambient[0] + diffuse[0] + */specular.r);
-	color.g = min(1.0f, /*ambient[1] + diffuse[1] + */specular.g);
-	color.b = min(1.0f, /*ambient[2] + diffuse[2] + */specular.b);
+	color.r = min(1.0f, ambient.r + diffuse.r + specular.r);
+	color.g = min(1.0f, ambient.g + diffuse.g + specular.g);
+	color.b = min(1.0f, ambient.b + diffuse.b + specular.b);
+
+	float NdotE = dot(N, E);
+	if (NdotE < 0)
+	{
+		N = -N;
+		NdotE = -NdotE;
+	}
+
+	GzCoord ref = 2 * NdotE * N - E;
+
+	color = envtex_fun(ref);
+
+	/*color.r = min(1.0f, ambient.r + diffuse.r + specular.r);
+	color.g = min(1.0f, ambient.g + diffuse.g + specular.g);
+	color.b = min(1.0f, ambient.b + diffuse.b + specular.b);*/
 
 	return color;
 }
