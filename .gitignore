@@ -1,8 +1,11 @@
 .vscode/*
 .vs/*
-Debug/*
+Debug/
+Backup/
 *.DS_Store
 *.opendb
 *.db
 *.db-shm
 *.db-wal
+*.htm
+*.html
