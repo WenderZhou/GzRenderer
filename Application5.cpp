@@ -200,17 +200,17 @@ int Application5::Render()
 		&(texCoords[2].u), &(texCoords[2].v) ); 
 
 		if(dummy[3] == '0')
-			m_pRender->GzPutTriangle(vertices, normals, texCoords, "left");
-		else if(dummy[3] == '1')
 			m_pRender->GzPutTriangle(vertices, normals, texCoords, "right");
+		else if(dummy[3] == '1')
+			m_pRender->GzPutTriangle(vertices, normals, texCoords, "left");
 		else if (dummy[3] == '2')
 			m_pRender->GzPutTriangle(vertices, normals, texCoords, "bottom");
 		else if (dummy[3] == '3')
 			m_pRender->GzPutTriangle(vertices, normals, texCoords, "top");
 		else if (dummy[3] == '4')
-			m_pRender->GzPutTriangle(vertices, normals, texCoords, "back");
-		else if (dummy[3] == '5')
 			m_pRender->GzPutTriangle(vertices, normals, texCoords, "front");
+		else if (dummy[3] == '5')
+			m_pRender->GzPutTriangle(vertices, normals, texCoords, "back");
 		else
 			m_pRender->GzPutTriangle(vertices, normals, texCoords, "");
 	} 
