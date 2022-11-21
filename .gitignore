@@ -1,0 +1,6 @@
+.vscode/*
+*.DS_Store
+*.opendb
+*.db
+*.db-shm
+*.db-wal
