@@ -38,7 +38,6 @@ public:
 	GzLight		ambientlight;
 	GzColor		Ka, Kd, Ks;
 	float		    spec;		/* specular power */
-	GzTexture		tex_fun;    /* tex_fun(float u, float v, GzColor color) */
 
   	// Constructors
 	GzRender(int xRes, int yRes);
@@ -69,7 +68,7 @@ public:
 
 	int SetDistributionCofficient(float spec);
 
-	int GzPutTriangle(float3 vertices[], float3 normals[], float2 texCoords[]);
+	int GzPutTriangle(float3 vertices[], float3 normals[], float2 texCoords[], const std::string textureName);
 
 	// HW3
 	int GzPutCamera(GzCamera camera);
@@ -83,6 +82,6 @@ public:
 	bool isPointInsideTriangle(float x0, float y0, float x1, float y1, float x2, float y2, float x, float y);
 
 	float GzInterpolate(float x0, float y0, float parameter0,float x1, float y1, float parameter1,float x2, float y2, float parameter2, float x, float y);
-	GzColor GzShading(GzCoord normal, GzTextureIndex uv);
+	GzColor GzShading(GzCoord normal, GzTextureIndex uv, const std::string textureName);
 };
 #endif

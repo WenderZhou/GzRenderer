@@ -4,6 +4,9 @@
 #ifndef GZ_H
 #define GZ_H
 
+#include <cstring>
+#include <unordered_map>
+
 /*
  * universal constants
  */
@@ -76,7 +79,7 @@ GzMatrix GzRotZMat(float degree);
 GzMatrix GzTrxMat(GzCoord translate);
 GzMatrix GzScaleMat(GzCoord scale);
 
-typedef	int	(*GzTexture)(float u, float v, GzColor color);	/* pointer to texture lookup method */
+typedef	GzColor(*GzTexture)(const std::string texture, float u, float v);	/* pointer to texture lookup method */
 /* u,v parameters [0,1] are defined tex_fun(float u, float v, GzColor color) */
 
 struct GzCamera

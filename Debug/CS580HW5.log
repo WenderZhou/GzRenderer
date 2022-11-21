@@ -1,0 +1,60 @@
+﻿cl : command line warning D9035: option 'Gm' has been deprecated and will be removed in a future release
+  rend.cpp
+C:\Users\56883\Desktop\GzRenderer\rend.cpp(181,7): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\56883\Desktop\GzRenderer\rend.cpp(182,7): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\56883\Desktop\GzRenderer\rend.cpp(183,7): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\56883\Desktop\GzRenderer\rend.cpp(190,19): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\56883\Desktop\GzRenderer\rend.cpp(190,75): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\56883\Desktop\GzRenderer\rend.cpp(191,37): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\56883\Desktop\GzRenderer\rend.cpp(191,76): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\56883\Desktop\GzRenderer\rend.cpp(192,55): warning C4305: '=': truncation from 'int' to 'float'
+C:\Users\56883\Desktop\GzRenderer\rend.cpp(337,21): warning C4244: '=': conversion from 'float' to 'GzIntensity', possible loss of data
+C:\Users\56883\Desktop\GzRenderer\rend.cpp(338,23): warning C4244: '=': conversion from 'float' to 'GzIntensity', possible loss of data
+C:\Users\56883\Desktop\GzRenderer\rend.cpp(339,22): warning C4244: '=': conversion from 'float' to 'GzIntensity', possible loss of data
+C:\Users\56883\Desktop\GzRenderer\rend.cpp(473,11): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\56883\Desktop\GzRenderer\rend.cpp(474,11): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\56883\Desktop\GzRenderer\rend.cpp(475,11): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\56883\Desktop\GzRenderer\rend.cpp(476,11): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\56883\Desktop\GzRenderer\rend.cpp(483,69): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\56883\Desktop\GzRenderer\rend.cpp(483,66): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\56883\Desktop\GzRenderer\rend.cpp(485,92): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\56883\Desktop\GzRenderer\rend.cpp(485,89): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\56883\Desktop\GzRenderer\rend.cpp(489,101): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\56883\Desktop\GzRenderer\rend.cpp(489,98): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\56883\Desktop\GzRenderer\rend.cpp(490,101): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\56883\Desktop\GzRenderer\rend.cpp(490,98): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\56883\Desktop\GzRenderer\rend.cpp(491,101): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\56883\Desktop\GzRenderer\rend.cpp(491,98): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\56883\Desktop\GzRenderer\rend.cpp(498,143): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\56883\Desktop\GzRenderer\rend.cpp(498,140): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\56883\Desktop\GzRenderer\rend.cpp(499,143): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\56883\Desktop\GzRenderer\rend.cpp(499,140): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\56883\Desktop\GzRenderer\rend.cpp(510,65): warning C4244: 'argument': conversion from 'float' to 'GzDepth', possible loss of data
+  Generating Code...
+  Compiling...
+  Application5.cpp
+C:\Users\56883\Desktop\GzRenderer\Application5.cpp(97,22): warning C4305: '=': truncation from 'double' to 'float'
+C:\Users\56883\Desktop\GzRenderer\Application5.cpp(106,59): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\56883\Desktop\GzRenderer\Application5.cpp(107,60): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\56883\Desktop\GzRenderer\Application5.cpp(108,61): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\56883\Desktop\GzRenderer\Application5.cpp(114,54): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\56883\Desktop\GzRenderer\Application5.cpp(117,48): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\56883\Desktop\GzRenderer\Application5.cpp(118,47): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\56883\Desktop\GzRenderer\Application5.cpp(119,45): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\56883\Desktop\GzRenderer\Application5.cpp(46,20): warning C4101: 'interpStyle': unreferenced local variable
+C:\Users\56883\Desktop\GzRenderer\Application5.cpp(46,8): warning C4101: 'shaderType': unreferenced local variable
+C:\Users\56883\Desktop\GzRenderer\Application5.cpp(44,11): warning C4101: 'xRes': unreferenced local variable
+C:\Users\56883\Desktop\GzRenderer\Application5.cpp(47,9): warning C4101: 'specpower': unreferenced local variable
+C:\Users\56883\Desktop\GzRenderer\Application5.cpp(44,17): warning C4101: 'yRes': unreferenced local variable
+C:\Users\56883\Desktop\GzRenderer\Application5.cpp(165,17): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\56883\Desktop\GzRenderer\Application5.cpp(172,18): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\56883\Desktop\GzRenderer\Application5.cpp(182,9): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\56883\Desktop\GzRenderer\Application5.cpp(183,6): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\56883\Desktop\GzRenderer\Application5.cpp(189,6): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\56883\Desktop\GzRenderer\Application5.cpp(195,6): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  Generating Code...
+  Skipping... (no relevant changes detected)
+  CS580HWView.cpp
+  CS580HW.cpp
+  Application.cpp
+  CS580HW5.vcxproj -> C:\Users\56883\Desktop\GzRenderer\Debug\CS580HW5.exe

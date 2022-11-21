@@ -21,8 +21,7 @@ static char THIS_FILE[]=__FILE__;
 #define INFILE  "pot.asc"
 #define OUTFILE "output.ppm"
 
-extern int tex_fun(float u, float v, GzColor color); /* image texture function */
-extern int ptex_fun(float u, float v, GzColor color); /* procedural texture function */
+extern void initTexture();
 extern int GzFreeTexture();
 
 //////////////////////////////////////////////////////////////////////
@@ -91,11 +90,11 @@ int Application5::Initialize()
 		0.0f,	0.0f,	0.0f,	1.0f 
 	}; 
 
-#if 0 	/* set up app-defined camera if desired, else use camera defaults */
-	camera.position = { -3.0f, -25.0f, -4.0f };
-	camera.lookat = { 7.8f, 0.7f, 6.5f };
+#if 1 	/* set up app-defined camera if desired, else use camera defaults */
+	camera.position = { 13.2f, -8.7f, -13.8f };
+	camera.lookat = { 0.8f, 0.7f, 4.5f };
 	camera.worldup = { -0.2f,1.0f,0.0f };
-    camera.FOV = 63.7;              /* degrees */
+    camera.FOV = 53.7;              /* degrees */
 
 	status |= m_pRender->GzPutCamera(camera); 
 #endif 
@@ -139,6 +138,8 @@ int Application5::Initialize()
 	status |= m_pRender->GzPushMatrix(scale);  
 	status |= m_pRender->GzPushMatrix(rotateY); 
 	status |= m_pRender->GzPushMatrix(rotateX); 
+
+	initTexture();
 
 	if (status) exit(GZ_FAILURE); 
 
@@ -198,7 +199,20 @@ int Application5::Render()
 		&(normals[2].z), 
 		&(texCoords[2].u), &(texCoords[2].v) ); 
 
-		m_pRender->GzPutTriangle(vertices, normals, texCoords);
+		if(dummy[3] == '0')
+			m_pRender->GzPutTriangle(vertices, normals, texCoords, "left");
+		else if(dummy[3] == '1')
+			m_pRender->GzPutTriangle(vertices, normals, texCoords, "right");
+		else if (dummy[3] == '2')
+			m_pRender->GzPutTriangle(vertices, normals, texCoords, "bottom");
+		else if (dummy[3] == '3')
+			m_pRender->GzPutTriangle(vertices, normals, texCoords, "top");
+		else if (dummy[3] == '4')
+			m_pRender->GzPutTriangle(vertices, normals, texCoords, "back");
+		else if (dummy[3] == '5')
+			m_pRender->GzPutTriangle(vertices, normals, texCoords, "front");
+		else
+			m_pRender->GzPutTriangle(vertices, normals, texCoords, "");
 	} 
 
 	m_pRender->GzFlushDisplay2File(outfile); 	/* write out or update display to file*/

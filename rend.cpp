@@ -11,6 +11,7 @@
 #define ROUGHNESS 0.5f
 
 extern GzColor envtex_fun(GzCoord ref);
+GzColor tex_fun(const std::string textureName, float u, float v);
 
 float inline clamp(float val, float lowerBound, float upperBound)
 {
@@ -443,7 +444,7 @@ int GzRender::SetDistributionCofficient(float spec)
 	return GZ_SUCCESS;
 }
 
-int GzRender::GzPutTriangle(float3 vertices[], float3 normals[], float2 texCoords[])
+int GzRender::GzPutTriangle(float3 vertices[], float3 normals[], float2 texCoords[], const std::string textureName)
 {
 	for (int i = 0; i < 3; i++)
 		normals[i].normalize();
@@ -500,7 +501,11 @@ int GzRender::GzPutTriangle(float3 vertices[], float3 normals[], float2 texCoord
 
 				GzTextureIndex uvInterp = { uv_p.u * (1 + zInterp / (INT_MAX - zInterp)), uv_p.v * (1 + zInterp / (INT_MAX - zInterp)) };
 
-				GzColor color = GzShading(normal, uvInterp);
+				GzColor color;
+				if (textureName.length() > 0)
+					color = tex_fun(textureName, uvInterp.u, uvInterp.v);
+				else
+					color = GzShading(normal, uvInterp, textureName);
 
 				GzPut(i, j, ctoi(color.r), ctoi(color.g), ctoi(color.b), 1, zInterp);
 			}
@@ -589,7 +594,7 @@ const GzColor F0_Gold = { 255 / 255.0f, 229 / 255.0f, 158 / 255.0f };
 const GzColor F0_Aluminum = { 245 / 255.0f, 246 / 255.0f, 246 / 255.0f };
 const GzColor F0_Silver = { 252 / 255.0f, 250 / 255.0f, 245 / 255.0f };
 
-GzColor GzRender::GzShading(GzCoord normal, GzTextureIndex uv)
+GzColor GzRender::GzShading(GzCoord normal, GzTextureIndex uv, const std::string textureName)
 {
 	GzColor ambient = { 0.0f, 0.0f, 0.0f };
 	GzColor diffuse = { 0.0f, 0.0f, 0.0f };
