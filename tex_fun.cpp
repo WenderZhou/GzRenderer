@@ -68,7 +68,7 @@ void initTexture()
     loadTexture("skybox/front.ppm", "front");
     loadTexture("skybox/left.ppm", "left");
     loadTexture("skybox/right.ppm", "right");
-    loadTexture("skybox/top.ppm", "top");
+    loadTexture("skybox/top1.ppm", "top");
 }
 
 /* Image texture function */

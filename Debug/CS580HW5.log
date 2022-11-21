@@ -2,7 +2,6 @@
   StdAfx.cpp
   _WIN32_WINNT not defined. Defaulting to _WIN32_WINNT_MAXVER (see WinSDKVer.h)
 cl : command line warning D9035: option 'Gm' has been deprecated and will be removed in a future release
-  TranslateDlg.cpp
   tex_fun.cpp
 C:\Users\mike1\source\repos\WenderZhou\GzRenderer\tex_fun.cpp(31,25): warning C4477: 'fprintf' : format string '%s' requires an argument of type 'char *', but variadic argument 1 has type 'const std::string'
 C:\Users\mike1\source\repos\WenderZhou\GzRenderer\tex_fun.cpp(38,25): warning C4477: 'fprintf' : format string '%s' requires an argument of type 'char *', but variadic argument 1 has type 'const std::string'
@@ -20,8 +19,6 @@ C:\Users\mike1\source\repos\WenderZhou\GzRenderer\tex_fun.cpp(110,16): warning C
 C:\Users\mike1\source\repos\WenderZhou\GzRenderer\tex_fun.cpp(110,13): warning C4101: 'i': unreferenced local variable
 C:\Users\mike1\source\repos\WenderZhou\GzRenderer\tex_fun.cpp(107,20): warning C4101: 'pixel': unreferenced local variable
 C:\Users\mike1\source\repos\WenderZhou\GzRenderer\tex_fun.cpp(109,13): warning C4101: 'foo': unreferenced local variable
-  ScaleDlg.cpp
-  RotateDlg.cpp
   rend.cpp
 C:\Users\mike1\source\repos\WenderZhou\GzRenderer\rend.cpp(181,7): warning C4305: 'initializing': truncation from 'double' to 'float'
 C:\Users\mike1\source\repos\WenderZhou\GzRenderer\rend.cpp(182,7): warning C4305: 'initializing': truncation from 'double' to 'float'
@@ -53,6 +50,9 @@ C:\Users\mike1\source\repos\WenderZhou\GzRenderer\rend.cpp(498,140): warning C42
 C:\Users\mike1\source\repos\WenderZhou\GzRenderer\rend.cpp(499,143): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 C:\Users\mike1\source\repos\WenderZhou\GzRenderer\rend.cpp(499,140): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 C:\Users\mike1\source\repos\WenderZhou\GzRenderer\rend.cpp(510,65): warning C4244: 'argument': conversion from 'float' to 'GzDepth', possible loss of data
+  TranslateDlg.cpp
+  ScaleDlg.cpp
+  RotateDlg.cpp
   MainFrm.cpp
   CS580HWView.cpp
   CS580HWDoc.cpp
@@ -80,4 +80,5 @@ C:\Users\mike1\source\repos\WenderZhou\GzRenderer\Application5.cpp(189,6): warni
 C:\Users\mike1\source\repos\WenderZhou\GzRenderer\Application5.cpp(195,6): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   Application.cpp
   Generating Code...
+  LINK : .\Debug\CS580HW5.exe not found or not built by the last incremental link; performing full link
   CS580HW5.vcxproj -> C:\Users\mike1\source\repos\WenderZhou\GzRenderer\Debug\CS580HW5.exe
