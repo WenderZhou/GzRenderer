@@ -2,6 +2,7 @@
 .vs/*
 Debug/
 Backup/
+skybox/
 *.DS_Store
 *.opendb
 *.db

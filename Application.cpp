@@ -18,7 +18,9 @@ static char THIS_FILE[]=__FILE__;
 
 Application::Application()
 {
-	m_pRender = NULL;		// the renderer
+	for (int k = 0; k < AAKERNEL_SIZE + 1; k++)
+		m_pRender[k] = NULL;		// the renderer
+	
 	m_pUserInput = NULL;
 	m_pFrameBuffer = NULL;
 }

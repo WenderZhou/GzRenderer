@@ -60,25 +60,22 @@ int Application5::Initialize()
  	m_nWidth = 256;		// frame buffer and display width
 	m_nHeight = 256;    // frame buffer and display height
 
-	m_pRender = new GzRender(m_nWidth, m_nHeight);
-	m_pRender->GzDefault();
-
-	m_pFrameBuffer = m_pRender->framebuffer; 
+	for (int k = 0; k < AAKERNEL_SIZE + 1; k++)
+	{
+		m_pRender[k] = new GzRender(m_nWidth, m_nHeight);
+	}
 
 #if 1 	/* set up app-defined camera if desired, else use camera defaults */
-	//camera.position = { 13.2f, -8.7f, -13.8f };
 	camera.position = { 0.0f, 1.0f, 5.0f };
-	//camera.lookat = { 0.8f, 0.7f, 4.5f };
 	camera.lookat = { 0.0f, 1.0f, 0.0f };
 	camera.worldup = { 0.0f, 1.0f, 0.0f };
     camera.FOV = 53.7;              /* degrees */
 
-	status |= m_pRender->GzPutCamera(camera); 
+	for (int k = 0; k < AAKERNEL_SIZE; k++)
+	{
+		status |= m_pRender[k]->GzPutCamera(camera);
+	}
 #endif 
-
-	/* Start Renderer */
-	status |= m_pRender->GzBeginRender();
-
 	/* Light */
 	GzLight	light1 = { {-0.7071, 0.7071, 0}, {0.6, 0.6, 0.6} };
 	GzLight	light2 = { {0, -0.7071, -0.7071}, {0.6, 0.6, 0.6} };
@@ -95,22 +92,35 @@ int Application5::Initialize()
 	GzColor ambientCoefficient = { 0.1, 0.1, 0.1 };
 	GzColor diffuseCoefficient = { 0.7, 0.7, 0.7 };
 
-	 
-	// renderer is ready for frame --- define lights and shader at start of frame 
+	float AAFilter[AAKERNEL_SIZE][3]
+	{
+		-0.52f, 0.38f, 0.128f,
+		0.41f, 0.56f, 0.119f,
+		0.27f, 0.08f, 0.294f,
+		-0.17f, -0.29f, 0.249f,
+		0.58f, -0.55f, 0.104f,
+		-0.31f, -0.71f, 0.106f
+	};
 
-	//m_pRender->SetInterpMode(GZ_COLOR);
-	m_pRender->SetInterpMode(GZ_NORMALS);
+	for (int k = 0; k < AAKERNEL_SIZE; k++)
+	{
+		status |= m_pRender[k]->GzBeginRender();
+	
+		m_pRender[k]->SetInterpMode(GZ_NORMALS);
     
-	m_pRender->AddDirectionalLight(light1);
-	m_pRender->AddDirectionalLight(light2);
-	m_pRender->AddDirectionalLight(light3);
+		m_pRender[k]->AddDirectionalLight(light1);
+		m_pRender[k]->AddDirectionalLight(light2);
+		m_pRender[k]->AddDirectionalLight(light3);
 
-	m_pRender->AddAmbientLight(ambientlight);
+		m_pRender[k]->AddAmbientLight(ambientlight);
 
-	m_pRender->SetAmbientCofficient(ambientCoefficient);
-	m_pRender->SetDiffuseCofficient(diffuseCoefficient);
-	m_pRender->SetSpecularCofficient(specularCoefficient);
-	m_pRender->SetDistributionCofficient(32);
+		m_pRender[k]->SetAmbientCofficient(ambientCoefficient);
+		m_pRender[k]->SetDiffuseCofficient(diffuseCoefficient);
+		m_pRender[k]->SetSpecularCofficient(specularCoefficient);
+		m_pRender[k]->SetDistributionCofficient(32);
+
+		m_pRender[k]->SetAntiAliasingParameter(AAFilter[k][0], AAFilter[k][1], AAFilter[k][2]);
+	}
 
 	initTexture();
 
@@ -131,7 +141,10 @@ int Application5::Render()
 	int			status = GZ_SUCCESS; 
 
 	/* Initialize Display */
-	status |= m_pRender->GzDefault();  /* init for new frame */
+	for (int k = 0; k < AAKERNEL_SIZE; k++)
+	{
+		status |= m_pRender[k]->GzDefault();  /* init for new frame */
+	}
 	
 	// I/O File open
 	FILE *infile;
@@ -172,24 +185,48 @@ int Application5::Render()
 		&(normals[2].z), 
 		&(texCoords[2].u), &(texCoords[2].v) ); 
 
+		std::string textureName;
+
 		if(dummy[3] == '0')
-			m_pRender->GzPutTriangle(vertices, normals, texCoords, "left");
+			textureName = "left";
 		else if(dummy[3] == '1')
-			m_pRender->GzPutTriangle(vertices, normals, texCoords, "right");
+			textureName = "right";
 		else if (dummy[3] == '2')
-			m_pRender->GzPutTriangle(vertices, normals, texCoords, "bottom");
+			textureName = "bottom";
 		else if (dummy[3] == '3')
-			m_pRender->GzPutTriangle(vertices, normals, texCoords, "top");
+			textureName = "top";
 		else if (dummy[3] == '4')
-			m_pRender->GzPutTriangle(vertices, normals, texCoords, "front");
+			textureName = "front";
 		else if (dummy[3] == '5')
-			m_pRender->GzPutTriangle(vertices, normals, texCoords, "back");
+			textureName = "back";
 		else
-			m_pRender->GzPutTriangle(vertices, normals, texCoords, "");
+			textureName = "";
+
+		for (int k = 0; k < AAKERNEL_SIZE; k++)
+			m_pRender[k]->GzPutTriangle(vertices, normals, texCoords, textureName);
 	} 
 
-	m_pRender->GzFlushDisplay2File(outfile); 	/* write out or update display to file*/
-	m_pRender->GzFlushDisplay2FrameBuffer();	// write out or update display to frame buffer
+	// store result to render 0
+	for (int j = 0; j < m_nHeight; j++)
+	{
+		for (int i = 0; i < m_nWidth; i++)
+		{
+			GzPixel result = { 0,0,0,0,0 };
+			for (int k = 0; k < AAKERNEL_SIZE; k++)
+			{
+				GzPixel& pixel = m_pRender[k]->pixelbuffer[i + j * m_nWidth];
+				result.red += pixel.red * m_pRender[k]->weight;
+				result.green += pixel.green * m_pRender[k]->weight;
+				result.blue += pixel.blue * m_pRender[k]->weight;
+			}
+			m_pRender[AAKERNEL_SIZE]->pixelbuffer[i + j * m_nWidth] = result;
+		}
+	}
+
+	m_pFrameBuffer = m_pRender[AAKERNEL_SIZE]->framebuffer;
+
+	m_pRender[AAKERNEL_SIZE]->GzFlushDisplay2File(outfile); 	/* write out or update display to file*/
+	m_pRender[AAKERNEL_SIZE]->GzFlushDisplay2FrameBuffer();	// write out or update display to frame buffer
 
 	/* 
 	 * Close file
@@ -214,7 +251,9 @@ int Application5::Clean()
 	 */ 
 	int	status = 0; 
 
-	delete(m_pRender);
+	for (int k = 0; k < AAKERNEL_SIZE + 1; k++)
+		delete(m_pRender[k]);
+
 	status |= GzFreeTexture();
 	
 	if (status) 

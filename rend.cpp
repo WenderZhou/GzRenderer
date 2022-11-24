@@ -481,6 +481,14 @@ int GzRender::SetDistributionCofficient(float spec)
 	return GZ_SUCCESS;
 }
 
+int GzRender::SetAntiAliasingParameter(float xOffset, float yOffset, float weight)
+{
+	this->xOffset = xOffset;
+	this->yOffset = yOffset;
+	this->weight = weight;
+	return GZ_SUCCESS;
+}
+
 int GzRender::GzPutTriangle(float3 vertices[], float3 normals[], float2 texCoords[], const std::string textureName)
 {
 	for (int i = 0; i < 3; i++)
@@ -517,23 +525,26 @@ int GzRender::GzPutTriangle(float3 vertices[], float3 normals[], float2 texCoord
 	{
 		for (int i = xMin; i <= xMax; i++)
 		{
-			if (isPointInsideTriangle(x[0], y[0], x[1], y[1], x[2], y[2], i, j))
+			float sampleX = i + xOffset;
+			float sampleY = j + yOffset;
+
+			if (isPointInsideTriangle(x[0], y[0], x[1], y[1], x[2], y[2], sampleX, sampleY))
 			{
-				float zInterp = GzInterpolate(x[0], y[0], z[0], x[1], y[1], z[1], x[2], y[2], z[2], i, j);
+				float zInterp = GzInterpolate(x[0], y[0], z[0], x[1], y[1], z[1], x[2], y[2], z[2], sampleX, sampleY);
 
 				GzCoord normal = 
 				{
-					GzInterpolate(x[0], y[0], normals[0].x, x[1], y[1], normals[1].x, x[2], y[2], normals[2].x, i, j),
-					GzInterpolate(x[0], y[0], normals[0].y, x[1], y[1], normals[1].y, x[2], y[2], normals[2].y, i, j),
-					GzInterpolate(x[0], y[0], normals[0].z, x[1], y[1], normals[1].z, x[2], y[2], normals[2].z, i, j)
+					GzInterpolate(x[0], y[0], normals[0].x, x[1], y[1], normals[1].x, x[2], y[2], normals[2].x, sampleX, sampleY),
+					GzInterpolate(x[0], y[0], normals[0].y, x[1], y[1], normals[1].y, x[2], y[2], normals[2].y, sampleX, sampleY),
+					GzInterpolate(x[0], y[0], normals[0].z, x[1], y[1], normals[1].z, x[2], y[2], normals[2].z, sampleX, sampleY)
 				};
 
 				float factor[3] = { 1 + z[0] / (INT_MAX - z[0]), 1 + z[1] / (INT_MAX - z[1]), 1 + z[2] / (INT_MAX - z[2]) };
 
 				GzTextureIndex uv_p = 
 				{
-					GzInterpolate(x[0], y[0], texCoords[0].u / factor[0], x[1], y[1], texCoords[1].u / factor[1], x[2], y[2], texCoords[2].u / factor[2], i, j),
-					GzInterpolate(x[0], y[0], texCoords[0].v / factor[0], x[1], y[1], texCoords[1].v / factor[1], x[2], y[2], texCoords[2].v / factor[2], i, j)
+					GzInterpolate(x[0], y[0], texCoords[0].u / factor[0], x[1], y[1], texCoords[1].u / factor[1], x[2], y[2], texCoords[2].u / factor[2], sampleX, sampleY),
+					GzInterpolate(x[0], y[0], texCoords[0].v / factor[0], x[1], y[1], texCoords[1].v / factor[1], x[2], y[2], texCoords[2].v / factor[2], sampleX, sampleY)
 				};
 
 				GzTextureIndex uvInterp = { uv_p.u * (1 + zInterp / (INT_MAX - zInterp)), uv_p.v * (1 + zInterp / (INT_MAX - zInterp)) };

@@ -19,7 +19,7 @@ public:
 	virtual ~Application();
 	
 public:
-	GzRender*  m_pRender;		// the renderer
+	GzRender*  m_pRender[AAKERNEL_SIZE + 1];		// the renderer
 	GzInput*   m_pUserInput;
 	char* m_pFrameBuffer;	// Frame Buffer
 	int   m_nWidth;			// width of Frame Buffer

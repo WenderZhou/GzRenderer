@@ -17,8 +17,9 @@
 #define	MATLEVELS	100		/* how many matrix pushes allowed */
 #define	MAX_LIGHTS	10		/* how many lights allowed */
 
+#define	AAKERNEL_SIZE	6   // antialiasing kernel size
+
 class GzRender{			/* define a renderer */
-  
 
 public:
 	unsigned short	xres;
@@ -39,6 +40,11 @@ public:
 	GzLight		ambientlight;
 	GzColor		Ka, Kd, Ks;
 	float		    spec;		/* specular power */
+
+	// Antialiasing
+	float		xOffset;
+	float		yOffset;
+	float		weight;
 
   	// Constructors
 	GzRender(int xRes, int yRes);
@@ -68,6 +74,8 @@ public:
 	int SetSpecularCofficient(float3 Ks);
 
 	int SetDistributionCofficient(float spec);
+
+	int SetAntiAliasingParameter(float xOffset, float yOffset, float weight);
 
 	int GzPutTriangle(float3 vertices[], float3 normals[], float2 texCoords[], const std::string textureName);
 

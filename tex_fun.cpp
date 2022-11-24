@@ -174,8 +174,9 @@ GzColor envtex_fun(GzCoord ref)
 /* Free texture memory */
 int GzFreeTexture()
 {
-	/*if(image!=NULL)
-		free(image);*/
+    for (auto info : textureInfos)
+        delete info.second.image;
+
 	return GZ_SUCCESS;
 }
 
