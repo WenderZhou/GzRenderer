@@ -20,7 +20,8 @@ void loadTexture(const std::string texturePath, const std::string textureName)
 {
     unsigned char		pixel[3];
     unsigned char     dummy;
-    char  		foo[8];
+    char  		foo[20];
+    char        absd[50];
     int   		i, j;
     FILE* fd;
 
@@ -38,7 +39,16 @@ void loadTexture(const std::string texturePath, const std::string textureName)
         fprintf(stderr, "texture file %s not found\n", texturePath);
         exit(-1);
     }
-    fscanf(fd, "%s %d %d %c", foo, &info.xs, &info.ys, &dummy);
+
+    fscanf(fd, "%s", foo);
+
+    // get rid of annoying "# Created by IrfanView"
+    /*fscanf(fd, "%s", foo);
+    fscanf(fd, "%s", foo);
+    fscanf(fd, "%s", foo);
+    fscanf(fd, "%s", foo);*/
+
+    fscanf(fd, "%d %d %c", &info.xs, &info.ys, &dummy);
 
     info.image = new GzColor[(info.xs + 1) * (info.ys + 1)];
 
@@ -68,7 +78,7 @@ void initTexture()
     loadTexture("skybox/front.ppm", "front");
     loadTexture("skybox/left.ppm", "left");
     loadTexture("skybox/right.ppm", "right");
-    loadTexture("skybox/top1.ppm", "top");
+    loadTexture("skybox/top.ppm", "top");
 }
 
 /* Image texture function */

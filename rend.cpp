@@ -108,6 +108,41 @@ matrix operator*(matrix m1, matrix m2)
 	return m;
 }
 
+float det(float m00, float m01, float m02, float m10, float m11, float m12, float m20, float m21, float m22)
+{
+	return m00 * m11 * m22 + m01 * m12 * m20 + m02 * m10 * m21 - m00 * m12 * m21 - m01 * m10 * m22 - m02 * m11 * m20;
+}
+
+matrix inverse(matrix m)
+{
+	matrix c;
+	c[0][0] = +det(m[1][1], m[1][2], m[1][3], m[2][1], m[2][2], m[2][3], m[3][1], m[3][2], m[3][3]);
+	c[0][1] = -det(m[1][0], m[1][2], m[1][3], m[2][0], m[2][2], m[2][3], m[3][0], m[3][2], m[3][3]);
+	c[0][2] = +det(m[1][0], m[1][1], m[1][3], m[2][0], m[2][1], m[2][3], m[3][0], m[3][1], m[3][3]);
+	c[0][3] = -det(m[1][0], m[1][1], m[1][2], m[2][0], m[2][1], m[2][2], m[3][0], m[3][1], m[3][2]);
+	c[1][0] = -det(m[0][1], m[0][2], m[0][3], m[2][1], m[2][2], m[2][3], m[3][1], m[3][2], m[3][3]);
+	c[1][1] = +det(m[0][0], m[0][2], m[0][3], m[2][0], m[2][2], m[2][3], m[3][0], m[3][2], m[3][3]);
+	c[1][2] = -det(m[0][0], m[0][1], m[0][3], m[2][0], m[2][1], m[2][3], m[3][0], m[3][1], m[3][3]);
+	c[1][3] = +det(m[0][0], m[0][1], m[0][2], m[2][0], m[2][1], m[2][2], m[3][0], m[3][1], m[3][2]);
+	c[2][0] = +det(m[0][1], m[0][2], m[0][3], m[1][1], m[1][2], m[1][3], m[3][1], m[3][2], m[3][3]);
+	c[2][1] = -det(m[0][0], m[0][2], m[0][3], m[1][0], m[1][2], m[1][3], m[3][0], m[3][2], m[3][3]);
+	c[2][2] = +det(m[0][0], m[0][1], m[0][3], m[1][0], m[1][1], m[1][3], m[3][0], m[3][1], m[3][3]);
+	c[2][3] = -det(m[0][0], m[0][1], m[0][2], m[1][0], m[1][1], m[1][2], m[3][0], m[3][1], m[3][2]);
+	c[3][0] = -det(m[0][1], m[0][2], m[0][3], m[1][1], m[1][2], m[1][3], m[2][1], m[2][2], m[2][3]);
+	c[3][1] = +det(m[0][0], m[0][2], m[0][3], m[1][0], m[1][2], m[1][3], m[2][0], m[2][2], m[2][3]);
+	c[3][2] = -det(m[0][0], m[0][1], m[0][3], m[1][0], m[1][1], m[1][3], m[2][0], m[2][1], m[2][3]);
+	c[3][3] = +det(m[0][0], m[0][1], m[0][2], m[1][0], m[1][1], m[1][2], m[2][0], m[2][1], m[2][2]);
+
+	float D = m[0][0] * c[0][0] + m[0][1] * c[0][1] + m[0][2] * c[0][2] + m[0][3] * c[0][3];
+
+	return matrix(
+		c[0][0] / D, c[1][0] / D, c[2][0] / D, c[3][0] / D,
+		c[0][1] / D, c[1][1] / D, c[2][1] / D, c[3][1] / D,
+		c[0][2] / D, c[1][2] / D, c[2][2] / D, c[3][2] / D,
+		c[0][3] / D, c[1][3] / D, c[2][3] / D, c[3][3] / D
+	);
+}
+
 // Create rotate matrix : rotate along x axis
 GzMatrix GzRotXMat(float degree)
 {
@@ -304,6 +339,7 @@ int GzRender::GzPushMatrix(GzMatrix	matrix)
 				matrix[i][j] = matrix[i][j] / K;
 
 		Xnorm[matlevel + 1] = Xnorm[matlevel] * matrix;
+		XnormInv = inverse(Xnorm[matlevel + 1]);
 	}
 	else
 		Xnorm[matlevel + 1] = Xnorm[matlevel];
@@ -321,6 +357,7 @@ int GzRender::GzPopMatrix()
 - check for stack underflow
 */
 	matlevel--;
+	XnormInv = inverse(Xnorm[matlevel]);
 
 	return GZ_SUCCESS;
 }
@@ -666,7 +703,18 @@ GzColor GzRender::GzShading(GzCoord normal, GzTextureIndex uv, const std::string
 
 	GzCoord ref = 2 * NdotE * N - E;
 
-	color = envtex_fun(ref);
+	GzCoord ref_world =
+	{
+		XnormInv[0][0] * ref.x + XnormInv[0][1] * ref.y + XnormInv[0][2] * ref.z,
+		XnormInv[1][0] * ref.x + XnormInv[1][1] * ref.y + XnormInv[1][2] * ref.z,
+		XnormInv[2][0] * ref.x + XnormInv[2][1] * ref.y + XnormInv[2][2] * ref.z
+	};
+
+	GzMatrix I = xnorm * XnormInv;
+
+	ref_world.normalize();
+
+	color = envtex_fun(ref_world);
 
 	/*color.r = min(1.0f, ambient.r + diffuse.r + specular.r);
 	color.g = min(1.0f, ambient.g + diffuse.g + specular.g);

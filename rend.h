@@ -30,6 +30,7 @@ public:
 	short		    matlevel;	        /* top of stack - current xform */
 	GzMatrix		Ximage[MATLEVELS];	/* stack of xforms (Xsm) */
 	GzMatrix		Xnorm[MATLEVELS];	/* xforms for norms (Xim) */
+	GzMatrix		XnormInv;
 	GzMatrix		Xsp;		        /* NDC to screen (pers-to-screen) */
 	GzColor		flatColor;          /* color state for flat shaded triangles */
 	int			interpMode;

@@ -65,35 +65,12 @@ int Application5::Initialize()
 
 	m_pFrameBuffer = m_pRender->framebuffer; 
 
-	/* Translation matrix */
-	GzMatrix	scale = 
-	{ 
-		3.25f,	0.0f,	0.0f,	0.0f, 
-		0.0f,	3.25f,	0.0f,	-3.25f, 
-		0.0f,	0.0f,	3.25f,	3.5f, 
-		0.0f,	0.0f,	0.0f,	1.0f 
-	}; 
- 
-	GzMatrix	rotateX = 
-	{ 
-		1.0f,	0.0f,	0.0f,	0.0f, 
-		0.0f,	.7071f,	.7071f,	0.0f, 
-		0.0f,	-.7071f,.7071f,	0.0f, 
-		0.0f,	0.0f,	0.0f,	1.0f 
-	}; 
- 
-	GzMatrix	rotateY = 
-	{ 
-		.866f,	0.0f,	-0.5f,	0.0f, 
-		0.0f,	1.0f,	0.0f,	0.0f, 
-		0.5f,	0.0f,	.866f,	0.0f, 
-		0.0f,	0.0f,	0.0f,	1.0f 
-	}; 
-
 #if 1 	/* set up app-defined camera if desired, else use camera defaults */
-	camera.position = { 13.2f, -8.7f, -13.8f };
-	camera.lookat = { 0.8f, 0.7f, 4.5f };
-	camera.worldup = { -0.2f,1.0f,0.0f };
+	//camera.position = { 13.2f, -8.7f, -13.8f };
+	camera.position = { 0.0f, 1.0f, 5.0f };
+	//camera.lookat = { 0.8f, 0.7f, 4.5f };
+	camera.lookat = { 0.0f, 1.0f, 0.0f };
+	camera.worldup = { 0.0f, 1.0f, 0.0f };
     camera.FOV = 53.7;              /* degrees */
 
 	status |= m_pRender->GzPutCamera(camera); 
@@ -116,7 +93,7 @@ int Application5::Initialize()
 	/* Material property */
 	GzColor specularCoefficient = { 0.3, 0.3, 0.3 };
 	GzColor ambientCoefficient = { 0.1, 0.1, 0.1 };
-	GzColor diffuseCoefficient = {0.7, 0.7, 0.7};
+	GzColor diffuseCoefficient = { 0.7, 0.7, 0.7 };
 
 	 
 	// renderer is ready for frame --- define lights and shader at start of frame 
@@ -134,10 +111,6 @@ int Application5::Initialize()
 	m_pRender->SetDiffuseCofficient(diffuseCoefficient);
 	m_pRender->SetSpecularCofficient(specularCoefficient);
 	m_pRender->SetDistributionCofficient(32);
-
-	status |= m_pRender->GzPushMatrix(scale);  
-	status |= m_pRender->GzPushMatrix(rotateY); 
-	status |= m_pRender->GzPushMatrix(rotateX); 
 
 	initTexture();
 
@@ -200,9 +173,9 @@ int Application5::Render()
 		&(texCoords[2].u), &(texCoords[2].v) ); 
 
 		if(dummy[3] == '0')
-			m_pRender->GzPutTriangle(vertices, normals, texCoords, "right");
-		else if(dummy[3] == '1')
 			m_pRender->GzPutTriangle(vertices, normals, texCoords, "left");
+		else if(dummy[3] == '1')
+			m_pRender->GzPutTriangle(vertices, normals, texCoords, "right");
 		else if (dummy[3] == '2')
 			m_pRender->GzPutTriangle(vertices, normals, texCoords, "bottom");
 		else if (dummy[3] == '3')
